@@ -10,7 +10,7 @@ public interface SuccessKilledDao {
      * @param userPhone
      * @return
      */
-    int insterSuccessKilled(long seckillId, long userPhone);
+    int insertSuccessKilled(long seckillId, long userPhone);
 
     SuccessKilled queryByIdWithSeckill(long seckillId);
 }

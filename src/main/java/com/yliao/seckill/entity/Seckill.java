@@ -6,7 +6,7 @@ public class Seckill {
     private long seckillId;
     private String name;
     private Integer number;
-    private Date satrtTime;
+    private Date startTime;
     private Date endTime;
     private Date createTime;
 
@@ -34,12 +34,12 @@ public class Seckill {
         this.number = number;
     }
 
-    public Date getSatrtTime() {
-        return satrtTime;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setSatrtTime(Date satrtTime) {
-        this.satrtTime = satrtTime;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
     public Date getEndTime() {
@@ -64,7 +64,7 @@ public class Seckill {
                 "seckillId=" + seckillId +
                 ", name='" + name + '\'' +
                 ", number=" + number +
-                ", satrtTime=" + satrtTime +
+                ", satrtTime=" + startTime +
                 ", endTime=" + endTime +
                 ", createTime=" + createTime +
                 '}';
