@@ -5,6 +5,8 @@ import com.yliao.seckill.dao.SuccessKilledDao;
 import com.yliao.seckill.dto.Exposer;
 import com.yliao.seckill.dto.SeckillExecution;
 import com.yliao.seckill.entity.Seckill;
+import com.yliao.seckill.entity.SuccessKilled;
+import com.yliao.seckill.enums.SecillStatEnum;
 import com.yliao.seckill.exception.RepeatKillException;
 import com.yliao.seckill.exception.SeckillCloseException;
 import com.yliao.seckill.exception.SeckillException;
@@ -12,6 +14,8 @@ import com.yliao.seckill.service.SeckillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import java.util.Date;
@@ -21,8 +25,10 @@ import java.util.List;
  * @Author: yliao
  * @Date: Created in 15:00 2018/4/1
  */
+@Service
 public class SeckillServiceImpl implements SeckillService {
     private Logger logger = LoggerFactory.getLogger(SeckillServiceImpl.class);
+    // 注入service依赖
     @Autowired
     private SeckillDao seckillDao;
 
@@ -58,8 +64,51 @@ public class SeckillServiceImpl implements SeckillService {
         return new Exposer(true, md5, seckillId);
     }
 
+    /**
+     * 使用注解控制事务的优点:
+     * 1 开发团队一致性约定，明确标注事务方法的编程风格
+     * 2 保证事务方法的执行时间尽量的短 不要穿插其他的网络操作， 或则剥离在方法外部
+     * 3 不是所有的方法都需要事务 如只有一条修改操作，只读操作不需要事务
+     * @param seckillId
+     * @param userPhone
+     * @param md5
+     * @return
+     * @throws SeckillException
+     * @throws RepeatKillException
+     * @throws SeckillCloseException
+     */
+    @Transactional
     public SeckillExecution executeSeckill(long seckillId, long userPhone, String md5) throws SeckillException, RepeatKillException, SeckillCloseException {
-        return null;
+        try {
+            if (md5 == null || !md5.equals(getMd5(seckillId))) {
+                throw new SeckillException("秒杀失败");
+            }
+            // 执行秒杀逻辑 减库存+记录秒杀行为
+            Date now = new Date();
+            int number = seckillDao.reduceNumber(seckillId, now);
+            if (number <= 0) {
+                // 没有更新记录
+                throw new SeckillCloseException("秒杀以结束");
+            } else {
+                // 减库存成功 记录购买行为
+                int insertCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
+                if (insertCount <= 0) {
+                    throw new RepeatKillException("重复秒杀");
+                } else {
+                    // 秒杀成功
+                    SuccessKilled successKilled = successKilledDao.queryByIdWithSeckill(seckillId, userPhone);
+                    return new SeckillExecution(seckillId, SecillStatEnum.SUCCESS, successKilled);
+                }
+            }
+        }catch (SeckillCloseException e1) {
+            throw e1;
+        }catch (RepeatKillException e2) {
+            throw e2;
+        }catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            // 转化为运行期异常
+            throw new SeckillException("内部错误" + e.getMessage());
+        }
     }
 
     /**
