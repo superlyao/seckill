@@ -5,7 +5,7 @@ package com.yliao.seckill.enums;
  * @Author: yliao
  * @Date: Created in 17:07 2018/4/1
  */
-public enum  SecillStatEnum {
+public enum SeckillStatEnum {
     SUCCESS(1, "秒杀成功"),
     END(0, "秒杀结束"),
     REPEAT_KILL(-1, "重复秒杀"),
@@ -16,7 +16,7 @@ public enum  SecillStatEnum {
 
     private String stateInfo;
 
-    SecillStatEnum(int state, String stateInfo) {
+    SeckillStatEnum(int state, String stateInfo) {
         this.state = state;
         this.stateInfo = stateInfo;
     }
@@ -29,8 +29,8 @@ public enum  SecillStatEnum {
         return stateInfo;
     }
 
-    public static SecillStatEnum stateOf(int index) {
-        for (SecillStatEnum state: values()) {
+    public static SeckillStatEnum stateOf(int index) {
+        for (SeckillStatEnum state: values()) {
             if (state.getState() == index) {
                 return state;
             }

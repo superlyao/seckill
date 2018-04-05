@@ -1,7 +1,7 @@
 package com.yliao.seckill.dto;
 
 import com.yliao.seckill.entity.SuccessKilled;
-import com.yliao.seckill.enums.SecillStatEnum;
+import com.yliao.seckill.enums.SeckillStatEnum;
 
 /**
  * @Author: yliao
@@ -24,7 +24,7 @@ public class SeckillExecution {
      * @param seckillId
      * @param successKilled
      */
-    public SeckillExecution(long seckillId, SecillStatEnum statEnum, SuccessKilled successKilled) {
+    public SeckillExecution(long seckillId, SeckillStatEnum statEnum, SuccessKilled successKilled) {
         this.seckillId = seckillId;
         this.state = statEnum.getState();
         this.info = statEnum.getStateInfo();
@@ -35,7 +35,7 @@ public class SeckillExecution {
      * 秒杀失败构造器 没有秒杀成功对象
      * @param seckillId
      */
-    public SeckillExecution(long seckillId, SecillStatEnum statEnum) {
+    public SeckillExecution(long seckillId, SeckillStatEnum statEnum) {
         this.seckillId = seckillId;
         this.state = statEnum.getState();
         this.info = statEnum.getStateInfo();

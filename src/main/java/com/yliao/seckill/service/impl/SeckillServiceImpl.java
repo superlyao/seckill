@@ -6,7 +6,7 @@ import com.yliao.seckill.dto.Exposer;
 import com.yliao.seckill.dto.SeckillExecution;
 import com.yliao.seckill.entity.Seckill;
 import com.yliao.seckill.entity.SuccessKilled;
-import com.yliao.seckill.enums.SecillStatEnum;
+import com.yliao.seckill.enums.SeckillStatEnum;
 import com.yliao.seckill.exception.RepeatKillException;
 import com.yliao.seckill.exception.SeckillCloseException;
 import com.yliao.seckill.exception.SeckillException;
@@ -47,16 +47,10 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     public Exposer exportSeckillUrl(long seckillId) {
-        try {
-            throw new SeckillCloseException("错误");
-        }catch (SeckillCloseException e) {
-            logger.error("错误");
-        }
         Seckill seckill = seckillDao.queryById(seckillId);
         if (seckill == null) {
             return new Exposer(false, seckillId);
         }
-
         Date start = seckill.getStartTime();
         Date end = seckill.getEndTime();
 
@@ -102,7 +96,7 @@ public class SeckillServiceImpl implements SeckillService {
                 } else {
                     // 秒杀成功
                     SuccessKilled successKilled = successKilledDao.queryByIdWithSeckill(seckillId, userPhone);
-                    return new SeckillExecution(seckillId, SecillStatEnum.SUCCESS, successKilled);
+                    return new SeckillExecution(seckillId, SeckillStatEnum.SUCCESS, successKilled);
                 }
             }
         }catch (SeckillCloseException e1) {
