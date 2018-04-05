@@ -47,6 +47,11 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     public Exposer exportSeckillUrl(long seckillId) {
+        try {
+            throw new SeckillCloseException("错误");
+        }catch (SeckillCloseException e) {
+            logger.error("错误");
+        }
         Seckill seckill = seckillDao.queryById(seckillId);
         if (seckill == null) {
             return new Exposer(false, seckillId);
