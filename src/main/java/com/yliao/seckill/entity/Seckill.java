@@ -10,6 +10,8 @@ public class Seckill {
     private Date endTime;
     private Date createTime;
 
+    public Seckill() {}
+
     public long getSeckillId() {
         return seckillId;
     }

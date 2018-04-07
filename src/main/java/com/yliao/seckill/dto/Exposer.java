@@ -28,6 +28,8 @@ public class Exposer {
     // 结束时间
     private long end;
 
+    public Exposer() {}
+
     public Exposer(boolean exposed, long seckillId) {
         this.exposed = exposed;
         this.seckillId = seckillId;

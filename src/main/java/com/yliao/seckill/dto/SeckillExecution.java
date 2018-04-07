@@ -1,5 +1,6 @@
 package com.yliao.seckill.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yliao.seckill.entity.SuccessKilled;
 import com.yliao.seckill.enums.SeckillStatEnum;
 
@@ -18,6 +19,9 @@ public class SeckillExecution {
 
     // 秒杀成功对象
     private SuccessKilled successKilled;
+
+    public SeckillExecution() {}
+
 
     /**
      * 秒杀成功构造器

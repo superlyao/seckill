@@ -57,7 +57,7 @@ public class SeckillController {
             method = RequestMethod.POST,
     produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public SeckillResult<Exposer> exposer(Long seckillId){
+    public SeckillResult<Exposer> exposer(@PathVariable("seckillId") Long seckillId){
         SeckillResult<Exposer> result;
         try {
             Exposer exposer = seckillService.exportSeckillUrl(seckillId);
@@ -84,13 +84,13 @@ public class SeckillController {
             result = new SeckillResult<SeckillExecution>(true, seckillExecution);
         }catch (SeckillCloseException e1) {
             SeckillExecution execution = new SeckillExecution(seckillId, SeckillStatEnum.END);
-            return new SeckillResult<SeckillExecution>(false, execution);
+            return new SeckillResult<SeckillExecution>(true, execution);
         } catch (RepeatKillException e2) {
             SeckillExecution execution = new SeckillExecution(seckillId, SeckillStatEnum.REPEAT_KILL);
-            return new SeckillResult<SeckillExecution>(false, execution);
+            return new SeckillResult<SeckillExecution>(true, execution);
         } catch (Exception e) {
             SeckillExecution execution = new SeckillExecution(seckillId, SeckillStatEnum.inner_error);
-            return new SeckillResult<SeckillExecution>(false, execution);
+            return new SeckillResult<SeckillExecution>(true, execution);
         }
         return result;
     }

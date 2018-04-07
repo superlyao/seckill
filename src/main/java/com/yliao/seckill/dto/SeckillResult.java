@@ -10,6 +10,8 @@ public class SeckillResult<T> {
     private T data;
     private String info;
 
+    public SeckillResult() {}
+
     public SeckillResult(boolean success, T data) {
         this.success = success;
         this.data = data;
@@ -42,5 +44,14 @@ public class SeckillResult<T> {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    @Override
+    public String toString() {
+        return "SeckillResult{" +
+                "success=" + success +
+                ", data=" + data +
+                ", info='" + info + '\'' +
+                '}';
     }
 }

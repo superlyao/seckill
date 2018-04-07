@@ -11,6 +11,8 @@ public class SuccessKilled {
     //多对一,因为一件商品在库存中有很多数量，对应的购买明细也有很多。
     private Seckill seckill;
 
+    public SuccessKilled() {}
+
     public long getSeckillId() {
         return seckillId;
     }

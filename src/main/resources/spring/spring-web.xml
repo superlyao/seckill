@@ -15,7 +15,22 @@
        默认注册DefaultAnnotationHandlerMapping(映射组件) AnnotationMethodHandlerAdapter(适配器)组件
         数据绑定 数字和日期的format @NumberFormat @DateTimeFormat xml json 默认读写支持
     -->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes" value="application/json"/>
+                <!--设置fastjson特性-->
+                <property name="features">
+                    <array>
+                        <!--设置null值也要输出，fastjson默认是关闭的-->
+                        <value>WriteMapNullValue</value>
+                        <!--设置使用文本方式输出日期，fastjson默认是long-->
+                        <value>WriteDateUseDateFormat</value>
+                    </array>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 
     <!--servlet-mapping 映射路径:"/"-->
     <!--
