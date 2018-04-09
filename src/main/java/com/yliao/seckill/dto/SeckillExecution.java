@@ -1,6 +1,5 @@
 package com.yliao.seckill.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yliao.seckill.entity.SuccessKilled;
 import com.yliao.seckill.enums.SeckillStatEnum;
 
@@ -53,6 +52,38 @@ public class SeckillExecution {
                 ", info='" + info + '\'' +
                 ", successKilled=" + successKilled +
                 '}';
+    }
+
+    public long getSeckillId() {
+        return seckillId;
+    }
+
+    public void setSeckillId(long seckillId) {
+        this.seckillId = seckillId;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public SuccessKilled getSuccessKilled() {
+        return successKilled;
+    }
+
+    public void setSuccessKilled(SuccessKilled successKilled) {
+        this.successKilled = successKilled;
     }
 }
 

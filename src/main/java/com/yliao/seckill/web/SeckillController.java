@@ -7,13 +7,11 @@ import com.yliao.seckill.entity.Seckill;
 import com.yliao.seckill.enums.SeckillStatEnum;
 import com.yliao.seckill.exception.RepeatKillException;
 import com.yliao.seckill.exception.SeckillCloseException;
-import com.yliao.seckill.exception.SeckillException;
 import com.yliao.seckill.service.SeckillService;
 import com.yliao.seckill.service.impl.SeckillServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -78,11 +76,10 @@ public class SeckillController {
         if (null == phone) {
             return new SeckillResult<SeckillExecution>(false, "未注册");
         }
-        SeckillResult<SeckillExecution> result;
         try {
             SeckillExecution seckillExecution = seckillService.executeSeckill(seckillId, phone, md5);
-            result = new SeckillResult<SeckillExecution>(true, seckillExecution);
-        }catch (SeckillCloseException e1) {
+            return new SeckillResult<SeckillExecution>(true, seckillExecution);
+        } catch (SeckillCloseException e1) {
             SeckillExecution execution = new SeckillExecution(seckillId, SeckillStatEnum.END);
             return new SeckillResult<SeckillExecution>(true, execution);
         } catch (RepeatKillException e2) {
@@ -92,7 +89,6 @@ public class SeckillController {
             SeckillExecution execution = new SeckillExecution(seckillId, SeckillStatEnum.inner_error);
             return new SeckillResult<SeckillExecution>(true, execution);
         }
-        return result;
     }
 
     @RequestMapping(value = "/time/now", method = RequestMethod.GET)

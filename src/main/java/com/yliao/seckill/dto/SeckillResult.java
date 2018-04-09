@@ -1,5 +1,6 @@
 package com.yliao.seckill.dto;
 
+
 /**
  * @Author: yliao
  * @Date: Created in 2018/4/5

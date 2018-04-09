@@ -23,17 +23,18 @@ var seckill = {
                     // 获取秒杀地址
                     var md5 = exposer.md5
                     var killUrl = seckill.url.execution(seckillId, md5)
-                    console.log("killUrl=" + killUrl)
                     // 绑定一次点击事件
                     $('#killBtn').one('click', function () {
                         $(this).addClass('disabled');
                         // 发送请求
                         $.post(killUrl, {}, function (result) {
+                            console.log("result:", result)
                             if (result && result.success) {
                                 var seckillResult = result.data
                                 var state = seckillResult.state
                                 var info =seckillResult.info
-                                node.html('<span class="label">info</span>')
+                                console.log("info:", info)
+                                node.html('<span>' + info + '</span>')
                             }
                         })
                     })
