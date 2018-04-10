@@ -4,6 +4,7 @@
 
 ## 踩坑记录
 - 数据库配置如:用户名，密码不能直接用username,password，可能会造成数据连接失败
+- 为每个entity添加set/get方法
 
 ## 集成sentry
 
