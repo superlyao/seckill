@@ -1,8 +1,9 @@
 package com.yliao.seckill.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Seckill {
+public class Seckill{
     private long seckillId;
     private String name;
     private Integer number;

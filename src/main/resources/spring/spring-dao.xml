@@ -41,4 +41,10 @@
         <!--dao接口包-->
         <property name="basePackage" value="com.yliao.seckill.dao"></property>
     </bean>
+
+    <!--redisdao 使用构造器注入-->
+    <bean id="redisDao" class="com.yliao.seckill.dao.cache.RedisDao">
+        <constructor-arg index="0" value="localhost"></constructor-arg>
+        <constructor-arg index="1" value="6379"></constructor-arg>
+    </bean>
 </beans>

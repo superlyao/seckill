@@ -2,6 +2,7 @@ package com.yliao.seckill.service.impl;
 
 import com.yliao.seckill.dao.SeckillDao;
 import com.yliao.seckill.dao.SuccessKilledDao;
+import com.yliao.seckill.dao.cache.RedisDao;
 import com.yliao.seckill.dto.Exposer;
 import com.yliao.seckill.dto.SeckillExecution;
 import com.yliao.seckill.entity.Seckill;
@@ -35,6 +36,9 @@ public class SeckillServiceImpl implements SeckillService {
     @Autowired
     private SuccessKilledDao successKilledDao;
 
+    @Autowired
+    private RedisDao redisDao;
+
     // 用于混淆MD5
     private static final String slat = "aqwddaslk@@#!@#!@#!";
 
@@ -46,10 +50,19 @@ public class SeckillServiceImpl implements SeckillService {
         return seckillDao.queryById(seckillId);
     }
 
+
     public Exposer exportSeckillUrl(long seckillId) {
-        Seckill seckill = seckillDao.queryById(seckillId);
-        if (seckill == null) {
-            return new Exposer(false, seckillId);
+        // 优化点： 缓存优化:超时的基础维护一致性
+        // 访问redis
+        Seckill seckill = redisDao.getSeckill(seckillId);
+        if (null == seckill) { //如果为空访问数据库
+            seckill = seckillDao.queryById(seckillId);
+            if (seckill == null) { // 数据为空直接失败
+                return new Exposer(false, seckillId);
+            } else {
+                //放入redis
+                redisDao.putSeckill(seckill);
+            }
         }
         Date start = seckill.getStartTime();
         Date end = seckill.getEndTime();
