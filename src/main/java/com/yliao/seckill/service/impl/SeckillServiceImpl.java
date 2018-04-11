@@ -1,5 +1,6 @@
 package com.yliao.seckill.service.impl;
 
+import com.mchange.v2.log.LogUtils;
 import com.yliao.seckill.dao.SeckillDao;
 import com.yliao.seckill.dao.SuccessKilledDao;
 import com.yliao.seckill.dao.cache.RedisDao;
@@ -11,6 +12,7 @@ import com.yliao.seckill.enums.SeckillStatEnum;
 import com.yliao.seckill.exception.RepeatKillException;
 import com.yliao.seckill.exception.SeckillCloseException;
 import com.yliao.seckill.exception.SeckillException;
+import com.yliao.seckill.log.LoggerUtil;
 import com.yliao.seckill.service.SeckillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,7 +119,7 @@ public class SeckillServiceImpl implements SeckillService {
         }catch (RepeatKillException e2) {
             throw e2;
         }catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LoggerUtil.error(this.getClass(),e.getMessage(), e);
             // 转化为运行期异常
             throw new SeckillException("内部错误" + e.getMessage());
         }

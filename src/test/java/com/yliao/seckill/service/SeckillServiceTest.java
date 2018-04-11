@@ -6,6 +6,7 @@ import com.yliao.seckill.dto.SeckillExecution;
 import com.yliao.seckill.entity.Seckill;
 import com.yliao.seckill.exception.RepeatKillException;
 import com.yliao.seckill.exception.SeckillCloseException;
+import com.yliao.seckill.log.LoggerUtil;
 import com.yliao.seckill.service.impl.SeckillServiceImpl;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -50,9 +51,9 @@ public class SeckillServiceTest extends TestConfig {
             SeckillExecution seckillExecution = seckillService.executeSeckill(1000, 13800000001L, "5eea866acde5d5c8571fbb8566c2b44a");
             logger.info("result{}", seckillExecution);
         } catch (RepeatKillException e) {
-            logger.error(e.getMessage());
+            LoggerUtil.error(this.getClass(),e.getMessage(), e);
         }catch (SeckillCloseException e1) {
-            logger.error(e1.getMessage());
+            LoggerUtil.error(this.getClass(),e1.getMessage(), e1);
         }
     }
 }

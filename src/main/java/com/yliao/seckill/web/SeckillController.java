@@ -7,6 +7,7 @@ import com.yliao.seckill.entity.Seckill;
 import com.yliao.seckill.enums.SeckillStatEnum;
 import com.yliao.seckill.exception.RepeatKillException;
 import com.yliao.seckill.exception.SeckillCloseException;
+import com.yliao.seckill.log.LoggerUtil;
 import com.yliao.seckill.service.SeckillService;
 import com.yliao.seckill.service.impl.SeckillServiceImpl;
 import org.slf4j.Logger;
@@ -61,7 +62,7 @@ public class SeckillController {
             Exposer exposer = seckillService.exportSeckillUrl(seckillId);
             result = new SeckillResult<Exposer>(true, exposer);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LoggerUtil.error(this.getClass(),e.getMessage(), e);
             return new SeckillResult<Exposer>(false, e.getMessage());
         }
         return result;
