@@ -99,17 +99,17 @@ public class SeckillServiceImpl implements SeckillService {
             }
             // 执行秒杀逻辑 减库存+记录秒杀行为
             Date now = new Date();
-            int number = seckillDao.reduceNumber(seckillId, now);
-            if (number <= 0) {
-                // 没有更新记录
-                throw new SeckillCloseException("秒杀以结束");
+            // 减库存成功 记录购买行为
+            int insertCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
+            if (insertCount <= 0) {
+                throw new RepeatKillException("重复秒杀");
             } else {
-                // 减库存成功 记录购买行为
-                int insertCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
-                if (insertCount <= 0) {
-                    throw new RepeatKillException("重复秒杀");
+                int number = seckillDao.reduceNumber(seckillId, now);
+                if (number <= 0) {
+                    // 没有更新记录 rollback
+                    throw new SeckillCloseException("秒杀以结束");
                 } else {
-                    // 秒杀成功
+                    // 秒杀成功 commit
                     SuccessKilled successKilled = successKilledDao.queryByIdWithSeckill(seckillId, userPhone);
                     return new SeckillExecution(seckillId, SeckillStatEnum.SUCCESS, successKilled);
                 }
