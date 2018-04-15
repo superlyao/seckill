@@ -40,9 +40,9 @@ $$
 -- 存储过程定义结束
 
 DELIMITER ;
-set @r_result = -3
+set @r_result = -3;
 -- 执行存储过程
-call execute_seckill(1003,13800000000, now(), @r_result);
+call execute_seckill(1001,13800000000, now(), @r_result);
 
 -- 获取结果
 select @r_result;
