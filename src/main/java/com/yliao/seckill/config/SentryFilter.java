@@ -1,6 +1,8 @@
 package com.yliao.seckill.config;
 
 
+import io.sentry.Sentry;
+
 import javax.servlet.*;
 import java.io.IOException;
 
@@ -15,7 +17,6 @@ public class SentryFilter implements Filter {
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
     }
 
     public void destroy() {

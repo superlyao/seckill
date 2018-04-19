@@ -36,7 +36,7 @@
         <property name="prefix" value="/WEB-INF/jsp/"></property>
         <property name="suffix" value=".jsp"></property>
      </bean>
-
     <!--扫描web相关的bean-->
     <context:component-scan base-package="com.yliao.seckill.web"/>
+    <bean class="io.sentry.servlet.SentryServletContainerInitializer"></bean>
 </beans>
