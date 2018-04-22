@@ -1,7 +1,6 @@
 package com.yliao.seckill.config;
 
 
-import io.sentry.Sentry;
 
 import javax.servlet.*;
 import java.io.IOException;

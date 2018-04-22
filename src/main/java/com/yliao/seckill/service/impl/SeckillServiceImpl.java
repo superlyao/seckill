@@ -1,6 +1,5 @@
 package com.yliao.seckill.service.impl;
 
-import com.mchange.v2.log.LogUtils;
 import com.yliao.seckill.dao.SeckillDao;
 import com.yliao.seckill.dao.SuccessKilledDao;
 import com.yliao.seckill.dao.cache.RedisDao;
