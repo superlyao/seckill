@@ -29,7 +29,12 @@
         允许使用 “/”做整体映射
     -->
     <mvc:default-servlet-handler/>
-
+    
+    <!--拦截器配置-->
+    <mvc:interceptors>
+        <bean class="com.yliao.seckill.config.SentryInterceptor"></bean>
+    </mvc:interceptors>
+    
     <!--配置jsp-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
